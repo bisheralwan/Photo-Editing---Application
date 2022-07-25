@@ -1,29 +1,3 @@
-#
-# The Python Imaging Library.
-# $Id$
-#
-# the Image class wrapper
-#
-# partial release history:
-# 1995-09-09 fl   Created
-# 1996-03-11 fl   PIL release 0.0 (proof of concept)
-# 1996-04-30 fl   PIL release 0.1b1
-# 1999-07-28 fl   PIL release 1.0 final
-# 2000-06-07 fl   PIL release 1.1
-# 2000-10-20 fl   PIL release 1.1.1
-# 2001-05-07 fl   PIL release 1.1.2
-# 2002-03-15 fl   PIL release 1.1.3
-# 2003-05-10 fl   PIL release 1.1.4
-# 2005-03-28 fl   PIL release 1.1.5
-# 2006-12-02 fl   PIL release 1.1.6
-# 2009-11-15 fl   PIL release 1.1.7
-#
-# Copyright (c) 1997-2009 by Secret Labs AB.  All rights reserved.
-# Copyright (c) 1995-2009 by Fredrik Lundh.
-#
-# See the README file for information on usage and redistribution.
-#
-
 import atexit
 import builtins
 import io
@@ -124,11 +98,6 @@ MAX_IMAGE_PIXELS = int(1024 * 1024 * 1024 // 4 // 3)
 
 
 try:
-    # If the _imaging C module is not present, Pillow will not load.
-    # Note that other modules should not refer to _imaging directly;
-    # import Image and use the Image.core variable instead.
-    # Also note that Image.core is not a publicly documented interface,
-    # and should be considered private and subject to change.
     from . import _imaging as core
 
     if __version__ != getattr(core, "PILLOW_VERSION", None):
@@ -140,23 +109,16 @@ try:
 
 except ImportError as v:
     core = deferred_error(ImportError("The _imaging C module is not installed."))
-    # Explanations for ways that we know we might have an import error
     if str(v).startswith("Module use of python"):
-        # The _imaging C module is present, but not compiled for
-        # the right version (windows only).  Print a warning, if
-        # possible.
         warnings.warn(
             "The _imaging extension was built for another version of Python.",
             RuntimeWarning,
         )
     elif str(v).startswith("The _imaging extension"):
         warnings.warn(str(v), RuntimeWarning)
-    # Fail here anyway. Don't let people run with a mostly broken Pillow.
-    # see docs/porting.rst
     raise
 
 
-# works everywhere, win for pypy, not cpython
 USE_CFFI_ACCESS = hasattr(sys, "pypy_version_info")
 try:
     import cffi
@@ -177,11 +139,6 @@ def isImageType(t):
     """
     return hasattr(t, "im")
 
-
-#
-# Constants
-
-# transpose
 class Transpose(IntEnum):
     FLIP_LEFT_RIGHT = 0
     FLIP_TOP_BOTTOM = 1
