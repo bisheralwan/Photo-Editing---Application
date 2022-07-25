@@ -290,37 +290,3 @@ def vertical_flip(image: Image) -> Image:
             set_color(new_image, x, H - 1 - y, right_side)
             set_color(new_image, x, y, left_side)
     return new_image
-
-
-"""image = load_image('riveter.jpg')
-file1 = ("riveter.jpg")
-
-show(red_channel(image))
-
-show(green_channel(image))
-
-show(blue_channel(image))
-
-red_img = load_image('red_image.png')
-green_img = load_image('green_image.png')
-blue_img = load_image('blue_image.png')
-show(combine(red_img, green_img, blue_img))
-
-show(three_tone(image, "black", "blue", "white"))
-
-show(extreme_contrast(image))
-
-show(sepia(image))
-
-show(posterize(image))
-
-show(detect_edges(image, 5))
-
-new_image,borders=draw_curve(load_image(file1),"cyan",[(145,28),(189,70),(4,20)])
-show(new_image)
-print(borders)
-
-show(flip_horizontal(image))
-
-show(vertical_flip(image))
-"""
